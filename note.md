@@ -82,3 +82,35 @@ Git鼓励大量使用分支：
 合并某分支到当前分支：`git merge <name>`
 
 删除分支：`git branch -d <name>`
+
+#### 详细使用
+
+1. `git log --oneline --decorate`查看各个分支当前所指的对象
+2. `git log --oneline --decorate --graph --all`可查看分叉历史。
+   
+   输出如下：
+
+    ```
+    $ git log --oneline --decorate --graph --all
+    * c2b9e (HEAD, master) made other changes
+    | * 87ab2 (testing) made a change
+    |/
+    * f30ab add feature #32 - ability to add new formats to the
+    * 34ac2 fixed bug #1328 - stack overflow under certain conditions
+    * 98ca9 initial commit of my project
+    ```
+
+#### 分支使用过程
+
+1. 确保在做分支操作前，当前分支(iss53)保持好一个干净的状态。
+2. 切换回主分支`git checkout master`
+3. 创建一个新分支(并切换)来完成紧急的任务`git checkout -b hotfix`
+4. 紧急任务完成后，切换回主分支，将该修改合并应用
+   ```
+   git checkout master
+   git merge hotfix
+   ```
+5. 完成修改后，新建的hotfix 分支应该删除`git branch -d hotfix`因为已经不再需要它了 —— 它与master 分支已经指向了同一个位置。
+6. 紧急任务已完成，切换回原分支继续之前的开发`git checkout iss53`
+
+> 分支合并如遇到问题，可参考[该网站](https://git-scm.com/book/zh/v2/Git-%E5%88%86%E6%94%AF-%E5%88%86%E6%94%AF%E7%9A%84%E6%96%B0%E5%BB%BA%E4%B8%8E%E5%90%88%E5%B9%B6)在"遇到冲突时的分支合并"部分寻找解决方案
